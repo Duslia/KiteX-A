@@ -30,7 +30,6 @@ const (
 	Concurrent = 100
 )
 
-
 var (
 	qpsCounter = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
@@ -39,6 +38,13 @@ var (
 		},
 		[]string{"status"},
 	)
+
+	qpsGauge = prometheus.NewGauge(prometheus.GaugeOpts{
+		Namespace: "kitex_server",
+		Subsystem: "kitex_server_test",
+		Name:      "kitex_rpc_qps_gauge",
+		Help:      "kitex qps.",
+	})
 )
 
 func sendReq(workID int64, waitGroup *sync.WaitGroup) {
@@ -114,12 +120,15 @@ func init() {
 			errCurCount := atomic.LoadUint64(&errCount)
 			log.Println("err qps = ", errCurCount-errLastCount)
 			errLastCount = errCurCount
+
+			qpsGauge.Set(float64(curCount-lastCount))
 		}
 	}()
 }
 
 func initPrometheus() {
 	prometheus.MustRegister(qpsCounter)
+	prometheus.MustRegister(qpsGauge)
 
 	// Expose the registered metrics via HTTP.
 	http.Handle("/metrics", promhttp.HandlerFor(
