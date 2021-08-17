@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"github.com/Duslia997/KiteX-A/KiteX-A/kitex_gen/api"
 	"github.com/Duslia997/KiteX-A/KiteX-A/kitex_gen/api/servicea"
+	"github.com/KiteX-A/ServiceDiscovery/sd"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/connpool"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
+	"net"
 	"net/http"
 	"runtime/debug"
 	"strconv"
@@ -86,7 +88,15 @@ func init() {
 	}))
 	options = append(options, client.WithRPCTimeout(time.Second*5))
 	options = append(options, client.WithConnectTimeout(time.Millisecond*50))
-	options = append(options, client.WithHostPorts("0.0.0.0:8888"))
+	eps := sd.Lookup("kitex.service.a")
+	if eps == nil || len(eps) == 0 {
+		log.Println("empty service a list")
+		eps = append(eps, sd.Endpoint{
+			IP:   "kitex-service-a-default-prod",
+			Port: "8888",
+		})
+	}
+	options = append(options, client.WithHostPorts(net.JoinHostPort(eps[0].IP, eps[0].Port)))
 
 	serverAClient, err = servicea.NewClient("servicea", options...)
 	if err != nil {
