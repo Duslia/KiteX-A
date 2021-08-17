@@ -21,6 +21,7 @@ server_c)
   ;;
 
 *)
+  echo "RUN_ENV = $RUN_ENV"
   echo "缺少环境变量RUN_ENV "
   exit 1
   ;;
