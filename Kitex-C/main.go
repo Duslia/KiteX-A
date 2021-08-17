@@ -8,6 +8,7 @@ import (
 	"github.com/Duslia997/KiteX-A/service_discovery/sd"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/connpool"
+	"github.com/cloudwego/kitex/pkg/retry"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
@@ -19,7 +20,6 @@ import (
 	"sync/atomic"
 	"time"
 )
-
 var (
 	serverAClient servicea.Client
 	count         uint64
@@ -85,7 +85,8 @@ func run() {
 
 func init() {
 	var err error
-
+	fp := retry.NewFailurePolicy()
+	fp.WithMaxRetryTimes(3) // 配置最多重试3次
 	options := []client.Option{}
 	options = append(options, client.WithLongConnection(connpool.IdleConfig{
 		MaxIdlePerAddress: 100,
@@ -94,6 +95,7 @@ func init() {
 	}))
 	options = append(options, client.WithRPCTimeout(time.Second*5))
 	options = append(options, client.WithConnectTimeout(time.Millisecond*50))
+	options = append(options, client.WithFailureRetry(fp))
 	eps := sd.Lookup("kitex.service.a")
 	if eps == nil || len(eps) == 0 {
 		log.Println("empty service a list")
@@ -115,13 +117,13 @@ func init() {
 		for range time.Tick(time.Second) {
 			curCount := atomic.LoadUint64(&count)
 			log.Println("qps = ", curCount-lastCount)
+			qpsGauge.Set(float64(curCount-lastCount))
 			lastCount = curCount
 
 			errCurCount := atomic.LoadUint64(&errCount)
 			log.Println("err qps = ", errCurCount-errLastCount)
 			errLastCount = errCurCount
 
-			qpsGauge.Set(float64(curCount-lastCount))
 		}
 	}()
 }

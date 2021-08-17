@@ -35,7 +35,7 @@ cd ./$PathPre
 pwd
 
 if [ "$IS_SYSTEM_TEST_ENV" != "1" ]; then
-    go build -o $CURDIR/output/$PathPre/bin/${RUN_NAME}
+    CGO_ENABLED=0 GOOS=linux go build -o $CURDIR/output/$PathPre/bin/${RUN_NAME}
 else
     go test -c -covermode=set -o $CURDIR/$PathPre/output/bin/${RUN_NAME} -coverpkg=./...
 fi

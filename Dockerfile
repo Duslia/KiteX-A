@@ -1,6 +1,6 @@
 FROM iron/go
-WORKDIR /opt/tiger/toutiao/app/service_a
+WORKDIR /opt/tiger/toutiao/app/service_c
 
-ADD service_a /opt/tiger/toutiao/app/service_a
+ADD kitex.service.c /opt/tiger/toutiao/app/service_c
 
-CMD [ "./service_a" ]
+CMD [ "./kitex.service.c" ]
