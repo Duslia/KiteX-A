@@ -4,10 +4,6 @@ metadata:
   name: kitex-service-a-default-prod
   namespace: default
   selfLink: /apis/apps/v1/namespaces/default/deployments/kitex-service-a-default-prod
-  uid: 16343cec-a4df-4ed2-ac81-9c8f9001ed9e
-  resourceVersion: '479049'
-  generation: 14
-  creationTimestamp: '2021-08-17T06:44:24Z'
   labels:
     appgroup: ''
     bytemesh.io.psm: kitex.service.a
@@ -85,22 +81,3 @@ spec:
       maxSurge: 1
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
-status:
-  observedGeneration: 14
-  replicas: 1
-  updatedReplicas: 1
-  readyReplicas: 1
-  availableReplicas: 1
-  conditions:
-    - type: Progressing
-      status: 'True'
-      lastUpdateTime: '2021-08-17T06:44:25Z'
-      lastTransitionTime: '2021-08-17T06:44:24Z'
-      reason: NewReplicaSetAvailable
-      message: ReplicaSet "kitex-service-a-default-prod-58d86d9f5" has successfully progressed.
-    - type: Available
-      status: 'True'
-      lastUpdateTime: '2021-08-17T07:54:33Z'
-      lastTransitionTime: '2021-08-17T07:54:33Z'
-      reason: MinimumReplicasAvailable
-      message: Deployment has minimum availability.

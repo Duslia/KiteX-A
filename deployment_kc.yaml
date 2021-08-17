@@ -4,10 +4,6 @@ metadata:
   name: kitex-service-c-default-prod
   namespace: default
   selfLink: /apis/apps/v1/namespaces/default/deployments/kitex-service-c-default-prod
-  uid: 808fc887-212e-4ccf-abfd-60487d391058
-  resourceVersion: '479101'
-  generation: 21
-  creationTimestamp: '2021-08-17T01:49:57Z'
   labels:
     appgroup: ''
     version: v1
@@ -85,22 +81,3 @@ spec:
       maxSurge: 0
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
-status:
-  observedGeneration: 21
-  replicas: 1
-  updatedReplicas: 1
-  readyReplicas: 1
-  availableReplicas: 1
-  conditions:
-    - type: Available
-      status: 'True'
-      lastUpdateTime: '2021-08-17T03:07:55Z'
-      lastTransitionTime: '2021-08-17T03:07:55Z'
-      reason: MinimumReplicasAvailable
-      message: Deployment has minimum availability.
-    - type: Progressing
-      status: 'True'
-      lastUpdateTime: '2021-08-17T03:08:27Z'
-      lastTransitionTime: '2021-08-17T03:07:55Z'
-      reason: NewReplicaSetAvailable
-      message: ReplicaSet "kitex-service-c-default-prod-6779f7df9" has successfully progressed.
