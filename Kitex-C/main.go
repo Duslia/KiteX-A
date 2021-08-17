@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/Duslia997/KiteX-A/KiteX-A/kitex_gen/api"
 	"github.com/Duslia997/KiteX-A/KiteX-A/kitex_gen/api/servicea"
-	"github.com/KiteX-A/ServiceDiscovery/sd"
+	"github.com/Duslia997/KiteX-A/service_discovery/sd"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/connpool"
 	"github.com/prometheus/client_golang/prometheus"

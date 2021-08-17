@@ -7,9 +7,9 @@ import (
 
 	"github.com/Duslia997/KiteX-A/KiteX-B/kitex_gen/api/serviceb"
 	"github.com/Duslia997/KiteX-A/pkg/zlog"
+	"github.com/Duslia997/KiteX-A/service_discovery/sd"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/connpool"
-	"github.com/KiteX-A/ServiceDiscovery/sd"
 )
 
 var ServerBClient serviceb.Client
